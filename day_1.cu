@@ -17,6 +17,14 @@ __global__ void vec_add(float *out, float *a, float *b, int n) {
   }
 }
 
+__global__ void parallel_vec_add(float *out, float *a, float *b, int n) {
+  int tid = blockIdx.x * blockDim.x + threadIdx.x;
+
+  if (tid < n) {
+    out[tid] = a[tid] + b[tid];
+  }
+}
+
 int main() {
   int N = 10;
   float *a, *b, *out;
@@ -39,7 +47,14 @@ int main() {
   cudaMemcpy(d_a, a, sizeof(float) * N, cudaMemcpyHostToDevice);
   cudaMemcpy(d_b, b, sizeof(float) * N, cudaMemcpyHostToDevice);
 
-  vec_add<<<1, N>>>(d_out, d_a, d_b, N);
+  // vec_add<<<1, N>>>(d_out, d_a, d_b, N);
+
+  //executing kernal 
+
+  int threads = 256;
+  int blocks = ((N + threads)/threads);
+  
+  parallel_vec_add<<<blocks,threads>>>(d_out,d_a,d_b,N);
 
   cudaMemcpy(out, d_out, sizeof(float) * N, cudaMemcpyDeviceToHost);
 
