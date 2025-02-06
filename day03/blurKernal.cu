@@ -2,7 +2,7 @@
 #include <iostream>
 #include <opencv2/opencv.hpp>
 
-__global__ void blurKernalGrayscale(int width, int height, unsigned char *input,
+/*__global__ void blurKernalGrayscale(int width, int height, unsigned char *input,
                                     unsigned char *output) {
 
   // we got the grid cords
@@ -12,8 +12,8 @@ __global__ void blurKernalGrayscale(int width, int height, unsigned char *input,
   float sum = 0.0f;
   int count = 0;
   if (x < width && y < height) {
-    for (int row = -1; row <= 1; row++) {
-      for (int col = -1; col <= 1; col++) {
+    for (int row = -3; row <= 3; row++) {
+      for (int col = -3; col <= 3; col++) {
         int currCol = y + col;
         int currRow = x + row;
 
@@ -28,7 +28,7 @@ __global__ void blurKernalGrayscale(int width, int height, unsigned char *input,
     }
     output[y * width + x] = (unsigned char)(sum / count);
   }
-}
+} */
 
 // For RBG images
 __global__ void blurKernalRGB(int width, int height, unsigned char *input,
@@ -42,10 +42,10 @@ __global__ void blurKernalRGB(int width, int height, unsigned char *input,
   int sumR = 0.0f, sumG = 0.0f, sumB = 0.0f;
   if (x < width && y < height) {
     int index = (y * width + x) * 3;
-    for (int row = -1; row <= 1; row++) {
-      for (int col = -1; col <= 1; col++) {
-        int currCol = y + col;
-        int currRow = x + row;
+    for (int row = -5; row <= 5; row++) {
+      for (int col = -5; col <= 5; col++) {
+        int currCol = x + col;
+        int currRow = y + row;
 
         // check for the bounderies
 
@@ -68,7 +68,7 @@ __global__ void blurKernalRGB(int width, int height, unsigned char *input,
   }
 }
 
-__global__ void color2GrayKernal(int width, int height, unsigned char *input,
+/*__global__ void color2GrayKernal(int width, int height, unsigned char *input,
                                  unsigned char *output) {
   int x = blockIdx.x * blockDim.x + threadIdx.x;
   int y = blockIdx.y * blockDim.y + threadIdx.y;
@@ -85,7 +85,7 @@ __global__ void color2GrayKernal(int width, int height, unsigned char *input,
 
     output[y * width + x] = gray;
   }
-}
+} */
 
 int main() {
 
