@@ -6,3 +6,4 @@ My Journey with CUDA
 | ----- | ----------------------------------------------------------------------------------------------------- |
 | Day 1 | Followed this [Tutorial / Blog](https://cuda-tutorial.readthedocs.io/en/latest/tutorials/tutorial01/) |
 | Day 2 | Started with the book Pmpp and wrote a kernal code to change color image to Gray Scale                |
+| Day 3 | Wrote a kernal code to convert RGB image to Blur image                                                |
